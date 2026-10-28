@@ -1,0 +1,25 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/gojava_order?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# product-service 内网地址
+product:
+  base-url: http://127.0.0.1:8083
+
+# Feign 超时配置（防止下游卡死拖垮 order-service）
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 2000   # 建连 2 秒
+        read-timeout: 3000      # 读 3 秒
+        logger-level: BASIC
+  httpclient:
+    enabled: true               # 用 Apache HttpClient 连接池

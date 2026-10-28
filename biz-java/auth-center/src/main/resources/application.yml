@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth-center
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/gojava_auth?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# 与 gateway/etc/gateway.yaml 中的 jwt.secret 必须一致（>=32 字节）
+gojava:
+  jwt:
+    secret: "change-me-to-a-32-byte-random-secret-in-production"
+    issuer: gojava-auth
+    access-expire-seconds: 7200      # 2h
+    refresh-expire-seconds: 604800  # 7d
+  password:
+    bcrypt-strength: 12
+    max-fail-count: 5
+    lock-minutes: 10

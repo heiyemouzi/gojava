@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+jwt:
+  # 生产环境必须从 etcd/环境变量注入，这里仅本地示例
+  secret: "change-me-to-a-32-byte-random-secret-in-production"
+  issuer: "gojava-auth"
+
+redis:
+  addr: "127.0.0.1:6379"
+  password: ""
+  db: 0
+
+# 白名单：不校验 JWT 的路径前缀
+whitelist:
+  - /api/auth/login
+  - /api/auth/refresh
+  - /ping
+
+# 路由表：前缀 -> 后端（网关会剥掉前缀后转发）
+routes:
+  - id: auth-center
+    prefix: /api/auth/
+    target: http://127.0.0.1:8081
+  - id: product-service
+    prefix: /api/product/
+    target: http://127.0.0.1:8083
+  - id: order-service
+    prefix: /api/order/
+    target: http://127.0.0.1:8084
+  - id: tenant-service
+    prefix: /api/tenant/
+    target: http://127.0.0.1:8082
+
+# 限流：每个 IP 每秒 20 个，突发 40
+rate_limit:
+  per_second: 20
+  burst: 40

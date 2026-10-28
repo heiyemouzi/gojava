@@ -1,0 +1,15 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: tenant-service
+  datasource:
+    # 本地开发：tenant 与 sys_user 同库（gojava_auth），生产应拆服务
+    url: jdbc:mysql://127.0.0.1:3306/gojava_auth?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+gojava:
+  password:
+    bcrypt-strength: 12
