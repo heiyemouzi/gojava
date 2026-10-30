@@ -21,7 +21,6 @@ func Auth(secret, issuer string, whitelist []string) gin.HandlerFunc {
 		path := c.Request.URL.Path
 		//除了登陆全部走jwt鉴权
 		if _, ok := white[path]; ok {
-			c.Next()
 			return
 		}
 
